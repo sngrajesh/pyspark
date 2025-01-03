@@ -20,9 +20,37 @@ PySpark is the Python API for Apache Spark, an open-source distributed computing
 RDD is the fundamental data structure in Spark. It is immutable, distributed, and fault-tolerant.
 
 ##### Key Operations on RDD:
-- **Transformations**: Return a new RDD, e.g., `map`, `filter`, `flatMap`.
-- **Actions**: Return a result to the driver, e.g., `collect`, `count`, `reduce`.
+- **Actions:**
+    - `collect()`
+    - `count()`
+    - `take(n)`
+    - `first()`
+    - `reduce(func)`
+    - `countByKey()`
+    - `saveAsTextFile(path)`
+    - `saveAsSequenceFile(path)`
+    - `saveAsHadoopFile(path)`
+    - `takeOrdered(n, key=None)`
+    - `foreach(func)`
+    - `lookup(key)`
 
+- **Transformations:**
+    - `map(func)`
+    - `filter(func)`
+    - `flatMap(func)`
+    - `reduceByKey(func)`
+    - `groupByKey()`
+    - `sortByKey(ascending=True, numPartitions=None)`
+    - `join(other)`
+    - `leftOuterJoin(other)`
+    - `rightOuterJoin(other)`
+    - `union(other)`
+    - `intersection(other)`
+    - `distinct()`
+    - `coalesce(numPartitions)`
+    - `repartition(numPartitions)`
+    - `partitionBy(numPartitions, partitionFunc)`
+          
 ##### Example:
 ```python
 from pyspark import SparkContext
@@ -77,6 +105,35 @@ DataFrames are distributed collections of data organized into named columns, sim
 - High-level API for structured data.
 - Supports SQL queries.
 - Optimized via Catalyst engine.
+
+##### Key Operations on DataFrame:
+- **Actions:**
+    - `show(n=20, truncate=True)`
+    - `count()`
+    - `collect()`
+    - `head(n)`
+    - `take(n)`
+    - `toPandas()`
+    - `write.format(name).save(path)`
+    - `write.json(path)`
+    - `write.csv(path)`
+    - `write.parquet(path)`
+    - `write.orc(path)`
+
+- **Transformations:**
+    - `select(*cols)`
+    - `filter(condition)`
+    - `groupBy(*cols)`
+    - `agg(*exprs)`
+    - `join(other, on=None, how=None)`
+    - `withColumn(name, col)`
+    - `drop(*cols)`
+    - `distinct()`
+    - `orderBy(*cols, ascending=True)`
+    - `limit(n)`
+    - `repartition(numPartitions, *cols)`
+    - `coalesce(numPartitions)`
+    - `alias(aliasName)`
 
 ##### Example:
 ```python
@@ -162,6 +219,17 @@ spark.stop()
 #### 3. **Spark SQL**
 Spark SQL allows querying structured data using SQL syntax.
 
+
+
+##### Key Operations on SQL:
+- **Actions:**
+    - `sql(query)`
+    - `table(tableName)`
+
+- **Transformations:**
+    - N/A (primarily used for querying)
+
+
 ##### Example:
 ```python
 from pyspark.sql import SparkSession
@@ -242,6 +310,21 @@ Spark’s machine learning library provides tools for:
 - Regression
 - Clustering
 - Recommendation systems
+
+##### Key Operations on MLlib:
+- **Actions:**
+    - `fit(dataset)`
+    - `transform(dataset)`
+    - `save(path)`
+    - `load(path)`
+
+- **Transformations:**
+    - `setParams(**params)`
+    - `setFeaturesCol(value)`
+    - `setLabelCol(value)`
+    - `setPredictionCol(value)`
+    - `setMaxIter(value)`
+    - `setRegParam(value)`
 
 ##### Example:
 ```python
@@ -327,6 +410,24 @@ spark.stop()
 #### 5. **Streaming**
 Spark Streaming is used for processing real-time data streams.
 
+##### Key Operations on Streaming:
+- **Actions:**
+    - `start()`
+    - `awaitTermination()`
+    - `stop()`
+
+- **Transformations:**
+    - `map(func)`
+    - `flatMap(func)`
+    - `filter(func)`
+    - `reduceByKeyAndWindow(func, windowDuration, slideDuration)`
+    - `updateStateByKey(func)`
+    - `window(windowDuration, slideDuration)`
+    - `join(otherStream)`
+    - `union(otherStream)`
+    - `transform(func)`
+
+
 ##### Example:
 ```python
 from pyspark.sql import SparkSession
@@ -368,48 +469,7 @@ query.awaitTermination()
 
 ### Common Operations
 
-#### RDD Operations
-- **Transformations**:
-  - `map`: Apply a function to each element.
-  - `filter`: Filter elements based on a condition.
-  - `flatMap`: Map and flatten the result.
-  - `union`: Combine two RDDs.
-  - `distinct`: Remove duplicate elements.
 
-##### Example:
-```python
-rdd1 = sc.parallelize([1, 2, 3])
-rdd2 = sc.parallelize([3, 4, 5])
-union_rdd = rdd1.union(rdd2)
-print(union_rdd.collect())  ## Output: [1, 2, 3, 3, 4, 5]
-distinct_rdd = union_rdd.distinct()
-print(distinct_rdd.collect())  ## Output: [1, 2, 3, 4, 5]
-```
-
-#### DataFrame Operations
-- **Basic Operations**:
-  - `show`: Display content.
-  - `select`: Select specific columns.
-  - `filter`: Filter rows based on conditions.
-  - `withColumn`: Add or modify columns.
-  - `drop`: Remove columns.
-
-##### Example:
-```python
-## Sorting
-sorted_df = df.sort(df.Age.desc())
-sorted_df.show()
-
-## GroupBy and Aggregations
-df.groupBy("Name").agg({"Age": "avg"}).show()
-
-## Join
-other_data = [("Alice", "F"), ("Bob", "M")]
-other_columns = ["Name", "Gender"]
-other_df = spark.createDataFrame(other_data, other_columns)
-joined_df = df.join(other_df, on="Name", how="inner")
-joined_df.show()
-```
 
 ---
 
