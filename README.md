@@ -505,9 +505,75 @@ query.awaitTermination()
 
 ### Common Operations
 
-
-
 ---
+
+### PySpark SQL Functions
+PySpark provides a rich set of built-in functions for working with data. Here are some of the most commonly used ones:
+
+#### String Functions
+- `concat(*cols)`: Concatenates multiple columns.
+- `instr(col, substring)`: Returns the position of the first occurrence of the substring in the column.
+- `lower(col)`, `upper(col)`: Converts strings to lowercase or uppercase.
+- `length(col)`: Returns the length of the string.
+- `trim(col)`, `ltrim(col)`, `rtrim(col)`: Trims spaces from strings.
+
+#### Date and Time Functions
+- `current_date()`, `current_timestamp()`: Returns the current date and timestamp.
+- `date_add(start, days)`, `date_sub(start, days)`: Adds or subtracts days from a date.
+- `datediff(end, start)`: Returns the difference in days between two dates.
+- `year(col)`, `month(col)`, `dayofmonth(col)`: Extracts year, month, or day from a date.
+
+#### Aggregation Functions
+- `count(col)`, `sum(col)`, `avg(col)`, `max(col)`, `min(col)`: Basic aggregate functions.
+- `collect_list(col)`, `collect_set(col)`: Returns all or unique values as a list.
+
+#### Conditional Functions
+- `when(condition, value).otherwise(default)`: Conditional logic.
+- `if(col, valueTrue, valueFalse)`: Inline conditional expressions.
+
+#### Miscellaneous Functions
+- `lit(value)`: Creates a column with a constant value.
+- `col(name)`: Refers to a column by name.
+- `explode(col)`: Expands arrays or maps into separate rows.
+- `split(col, pattern)`: Splits strings into arrays based on a pattern.
+
+#### Example Usage
+```python
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import col, lit, when, concat, current_date
+
+# Initialize SparkSession
+spark = SparkSession.builder.appName("example").getOrCreate()
+
+# Sample DataFrame
+data = [("Alice", 25), ("Bob", 30), ("Catherine", 35)]
+columns = ["Name", "Age"]
+df = spark.createDataFrame(data, columns)
+
+# Add a constant column
+df = df.withColumn("Country", lit("USA"))
+
+# Add conditional logic
+df = df.withColumn("AgeGroup", when(col("Age") > 30, "Above 30").otherwise("30 or Below"))
+
+# Concatenate strings
+df = df.withColumn("Description", concat(col("Name"), lit(" is "), col("Age"), lit(" years old")))
+
+# Add current date
+df = df.withColumn("Today", current_date())
+
+df.show()
+
+# Output:
+# +---------+---+-------+-----------+---------------------+----------+
+# |     Name|Age|Country|   AgeGroup|         Description|      Today|
+# +---------+---+-------+-----------+---------------------+----------+
+# |    Alice| 25|    USA|30 or Below|Alice is 25 years old|2025-01-04|
+# |      Bob| 30|    USA|30 or Below|  Bob is 30 years old|2025-01-04|
+# |Catherine| 35|    USA|   Above 30|Catherine is 35 years old|2025-01-04|
+# +---------+---+-------+-----------+---------------------+----------+
+```
+
 
 ### Optimization Techniques
 1. **Caching and Persistence**:
