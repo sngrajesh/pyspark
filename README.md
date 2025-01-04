@@ -33,6 +33,8 @@ RDD is the fundamental data structure in Spark. It is immutable, distributed, an
     - `takeOrdered(n, key=None)`
     - `foreach(func)`
     - `lookup(key)`
+    - `countByValue()`
+    - `top(n)`
 
 - **Transformations:**
     - `map(func)`
@@ -50,6 +52,13 @@ RDD is the fundamental data structure in Spark. It is immutable, distributed, an
     - `coalesce(numPartitions)`
     - `repartition(numPartitions)`
     - `partitionBy(numPartitions, partitionFunc)`
+    - `cartesian(other)`
+    - `sample(withReplacement, fraction, seed=None)`
+
+- **Others:**
+    - `cache()`
+    - `persist(storageLevel)`
+    - `unpersist()`
           
 ##### Example:
 ```python
@@ -119,6 +128,8 @@ DataFrames are distributed collections of data organized into named columns, sim
     - `write.csv(path)`
     - `write.parquet(path)`
     - `write.orc(path)`
+    - `describe(*cols)`
+    - `summary()`
 
 - **Transformations:**
     - `select(*cols)`
@@ -134,6 +145,17 @@ DataFrames are distributed collections of data organized into named columns, sim
     - `repartition(numPartitions, *cols)`
     - `coalesce(numPartitions)`
     - `alias(aliasName)`
+    - `fillna(value, subset=None)`
+    - `replace(to_replace, value, subset=None)`
+    - `dropna(how, thresh, subset=None)`
+    - `sample(withReplacement, fraction, seed=None)`
+    - `explode(column)`
+
+- **Others:**
+    - `cache()`
+    - `persist(storageLevel)`
+    - `unpersist()`
+    - `isEmpty()`
 
 ##### Example:
 ```python
@@ -225,9 +247,14 @@ Spark SQL allows querying structured data using SQL syntax.
 - **Actions:**
     - `sql(query)`
     - `table(tableName)`
+    - `createOrReplaceTempView(viewName)`
+    - `createGlobalTempView(viewName)`
 
 - **Transformations:**
-    - N/A (primarily used for querying)
+    - Primarily used for querying with SQL syntax (e.g., SELECT, JOIN, GROUP BY).
+
+- **Others:**
+    - Integration with Hive (`enableHiveSupport()`, `setConf(key, value)`).
 
 
 ##### Example:
@@ -317,6 +344,7 @@ Spark’s machine learning library provides tools for:
     - `transform(dataset)`
     - `save(path)`
     - `load(path)`
+    - `evaluate(dataset)`
 
 - **Transformations:**
     - `setParams(**params)`
@@ -325,6 +353,8 @@ Spark’s machine learning library provides tools for:
     - `setPredictionCol(value)`
     - `setMaxIter(value)`
     - `setRegParam(value)`
+    - `setThreshold(value)`
+    - `setStepSize(value)`
 
 ##### Example:
 ```python
@@ -415,6 +445,7 @@ Spark Streaming is used for processing real-time data streams.
     - `start()`
     - `awaitTermination()`
     - `stop()`
+    - `isActive()`
 
 - **Transformations:**
     - `map(func)`
@@ -426,7 +457,12 @@ Spark Streaming is used for processing real-time data streams.
     - `join(otherStream)`
     - `union(otherStream)`
     - `transform(func)`
+	- `countByWindow(windowDuration, slideDuration)`
+	- `countByValueAndWindow(windowDuration, slideDuration)`
 
+- **Others:**
+    - `checkpoint(directory)`
+    - `remember(duration)`
 
 ##### Example:
 ```python
