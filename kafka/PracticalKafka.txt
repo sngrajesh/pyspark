@@ -1,0 +1,81 @@
+Kafka Topics CLI 
+-----------------
+
+>>>>$ ./run-kafka_zookeeper_server.sh -s start
+>>>>$ ./run-kafka_server.sh -s start
+>>>>$ jps
+Look for this two application are running:
+Kafka
+QuorumPeerMain
+
+----------------
+
+$kafka-topics.sh
+
+1) Create a topic
+So, the first thing you want to do is kafka-topics, and we need to reference zookeeper,
+and the reason we need to reference zookeeper is that, to create a topic, we have to 
+point to zookeeper.
+On third CLI give following command
+>>>>$kafka-topics.sh --zookeeper 127.0.0.1:2181 --topic first_topic --create
+
+>>>>$kafka-topics.sh --zookeeper 127.0.0.1:2181 --topic first_topic --create  --partitions 3
+
+>>>>$kafka-topics.sh --zookeeper 127.0.0.1:2181 --topic first_topic --create --partitions 3 --replication-factor 2
+
+2) List the topics
+>>>>$kafka-topics.sh --zookeeper 127.0.0.1:2181 --list
+3) Describe the topics
+>>>>$kafka-topics.sh --zookeeper 127.0.0.1:2181 --topic first_topic --describe
+
+Exercise
+—---------
+Create a new topic, having name as second_topic, having six partitions, and then 
+the replication factor, which is going to be one.
+
+List all the topics to confirm the creation of the above topic.
+
+Console Producer 
+----------------
+
+>>>>$kafka-console-producer.sh
+
+1) Produce messages
+So we are going to launch our first kafka-console-producer.
+>>>>$kafka-console-producer.sh --broker-list 127.0.0.1:9092 --topic first_topic
+
+2)
+>>>>$kafka-console-producer.sh --broker-list 127.0.0.1:9092 --topic first_topic --producer-property acks=all
+
+Kafka console consumer
+----------------------
+>>>>$kafka-console-consumer.sh
+1) Consume/read the messages
+Open a new terminal window (say console consumer window)
+so let's give it a try.
+>>>>$kafka-console-consumer.sh --bootstrap-server 127.0.0.1:9092 --topic first_topic
+
+2) But how do we do to read all the messages in the topic?
+But how do we do to read all the messages in the topic? 
+Because sometimes we need to. 
+So, we launch the exact same command. But this time, we will do from beginning.
+And by doing from beginning, we are going to ask console consumer to go to the 
+beginning of topic and tell what the other is.
+^C(Ctrl + C) the console consumer terminal, and again give following command
+>>>>$kafka-console-consumer.sh --bootstrap-server 127.0.0.1:9092 --topic first_topic --from-beginning
+
+Kafka consumers in group
+------------------------
+
+1) Creating console consumer belonging to the group
+In third CLI (consumer1 cli) give following command
+>>>>$kafka-console-consumer.sh --bootstrap-server 127.0.0.1:9092 --topic first_topic --group my-first-application
+
+>>>>$kafka-console-producer.sh --broker-list 127.0.0.1:9092 --topic first_topic
+
+
+
+
+
+
+
