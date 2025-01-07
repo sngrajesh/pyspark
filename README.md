@@ -21,44 +21,44 @@ RDD is the fundamental data structure in Spark. It is immutable, distributed, an
 
 ##### Key Operations on RDD:
 - **Actions:**
-    - `collect()`
-    - `count()`
-    - `take(n)`
-    - `first()`
-    - `reduce(func)`
-    - `countByKey()`
-    - `saveAsTextFile(path)`
-    - `saveAsSequenceFile(path)`
-    - `saveAsHadoopFile(path)`
-    - `takeOrdered(n, key=None)`
-    - `foreach(func)`
-    - `lookup(key)`
-    - `countByValue()`
-    - `top(n)`
+    - `collect()`: Returns all elements of the dataset as a list.
+    - `count()`: Counts the number of elements in the dataset.
+    - `take(n)`: Returns the first `n` elements.
+    - `first()`: Returns the first element of the dataset.
+    - `reduce(func)`: Aggregates the elements using the provided function.
+    - `countByKey()`: Counts occurrences of each key in an RDD of key-value pairs.
+    - `saveAsTextFile(path)`: Saves the dataset to a text file.
+    - `saveAsSequenceFile(path)`: Saves the dataset as a Hadoop sequence file.
+    - `saveAsHadoopFile(path)`: Saves the dataset as a Hadoop file.
+    - `takeOrdered(n, key=None)`: Returns the top `n` elements based on an ordering.
+    - `foreach(func)`: Applies a function to each element in the dataset.
+    - `lookup(key)`: Looks up the values for a specific key in an RDD of key-value pairs.
+    - `countByValue()`: Counts the occurrences of each value in the dataset.
+    - `top(n)`: Returns the top `n` elements from the dataset.
 
 - **Transformations:**
-    - `map(func)`
-    - `filter(func)`
-    - `flatMap(func)`
-    - `reduceByKey(func)`
-    - `groupByKey()`
-    - `sortByKey(ascending=True, numPartitions=None)`
-    - `join(other)`
-    - `leftOuterJoin(other)`
-    - `rightOuterJoin(other)`
-    - `union(other)`
-    - `intersection(other)`
-    - `distinct()`
-    - `coalesce(numPartitions)`
-    - `repartition(numPartitions)`
-    - `partitionBy(numPartitions, partitionFunc)`
-    - `cartesian(other)`
-    - `sample(withReplacement, fraction, seed=None)`
+    - `map(func)`: Applies a function to each element and returns a new RDD.
+    - `filter(func)`: Returns elements that satisfy the given condition.
+    - `flatMap(func)`: Maps each element to multiple outputs (e.g., splitting strings).
+    - `reduceByKey(func)`: Merges values for each key using a function.
+    - `groupByKey()`: Groups values by key.
+    - `sortByKey(ascending=True, numPartitions=None)`: Sorts key-value pairs by key.
+    - `join(other)`: Joins two RDDs by key.
+    - `leftOuterJoin(other)`: Performs a left outer join between two RDDs.
+    - `rightOuterJoin(other)`: Performs a right outer join between two RDDs.
+    - `union(other)`: Combines two RDDs.
+    - `intersection(other)`: Returns the intersection of two RDDs.
+    - `distinct()`: Removes duplicate elements.
+    - `coalesce(numPartitions)`: Reduces the number of partitions in the RDD.
+    - `repartition(numPartitions)`: Increases or decreases the number of partitions.
+    - `partitionBy(numPartitions, partitionFunc)`: Partitions the RDD using a partitioning function.
+    - `cartesian(other)`: Computes the Cartesian product of two RDDs.
+    - `sample(withReplacement, fraction, seed=None)`: Returns a sampled subset of the dataset.
 
 - **Others:**
-    - `cache()`
-    - `persist(storageLevel)`
-    - `unpersist()`
+    - `cache()`: Caches the RDD in memory.
+    - `persist(storageLevel)`: Persists the RDD with a specified storage level.
+    - `unpersist()`: Removes an RDD from memory.
           
 ##### Example:
 ```python
@@ -117,45 +117,46 @@ DataFrames are distributed collections of data organized into named columns, sim
 
 ##### Key Operations on DataFrame:
 - **Actions:**
-    - `show(n=20, truncate=True)`
-    - `count()`
-    - `collect()`
-    - `head(n)`
-    - `take(n)`
-    - `toPandas()`
-    - `write.format(name).save(path)`
-    - `write.json(path)`
-    - `write.csv(path)`
-    - `write.parquet(path)`
-    - `write.orc(path)`
-    - `describe(*cols)`
-    - `summary()`
+    - `show(n=20, truncate=True)`: Displays the first `n` rows.
+    - `count()`: Counts the rows in the DataFrame.
+    - `collect()`: Returns all rows as a list.
+    - `head(n)`: Returns the first `n` rows as a list.
+    - `take(n)`: Returns the first `n` rows as a list.
+    - `toPandas()`: Converts the DataFrame to a Pandas DataFrame.
+    - `write.format(name).save(path)`: Saves the DataFrame in the specified format.
+    - `write.json(path)`: Saves the DataFrame as a JSON file.
+    - `write.csv(path)`: Saves the DataFrame as a CSV file.
+    - `write.parquet(path)`: Saves the DataFrame as a Parquet file.
+    - `write.orc(path)`: Saves the DataFrame as an ORC file.
+    - `describe(*cols)`: Computes summary statistics for specified columns.
+    - `summary()`: Computes a descriptive statistics summary.
 
 - **Transformations:**
-    - `select(*cols)`
-    - `filter(condition)`
-    - `groupBy(*cols)`
-    - `agg(*exprs)`
-    - `join(other, on=None, how=None)`
-    - `withColumn(name, col)`
-    - `drop(*cols)`
-    - `distinct()`
-    - `orderBy(*cols, ascending=True)`
-    - `limit(n)`
-    - `repartition(numPartitions, *cols)`
-    - `coalesce(numPartitions)`
-    - `alias(aliasName)`
-    - `fillna(value, subset=None)`
-    - `replace(to_replace, value, subset=None)`
-    - `dropna(how, thresh, subset=None)`
-    - `sample(withReplacement, fraction, seed=None)`
-    - `explode(column)`
+    - `select(*cols)`: Selects specific columns.
+    - `filter(condition)`: Filters rows based on a condition.
+    - `groupBy(*cols)`: Groups data by specified columns.
+    - `agg(*exprs)`: Performs aggregate calculations.
+    - `join(other, on=None, how=None)`: Joins two DataFrames.
+    - `withColumn(name, col)`: Adds or replaces a column.
+    - `drop(*cols)`: Drops specified columns.
+    - `distinct()`: Removes duplicate rows.
+    - `orderBy(*cols, ascending=True)`: Sorts rows by specified columns.
+    - `limit(n)`: Limits the number of rows returned.
+    - `repartition(numPartitions, *cols)`: Repartitions the DataFrame.
+    - `coalesce(numPartitions)`: Reduces the number of partitions in the DataFrame.
+    - `alias(aliasName)`: Assigns an alias to the DataFrame.
+    - `fillna(value, subset=None)`: Replaces null values with specified value(s).
+    - `replace(to_replace, value, subset=None)`: Replaces specified values.
+    - `dropna(how, thresh, subset=None)`: Drops rows containing null values.
+    - `sample(withReplacement, fraction, seed=None)`: Returns a sampled subset of rows.
+    - `explode(column)`: Converts arrays or maps into separate rows.
 
 - **Others:**
-    - `cache()`
-    - `persist(storageLevel)`
-    - `unpersist()`
-    - `isEmpty()`
+    - `cache()`: Caches the DataFrame in memory.
+    - `persist(storageLevel)`: Persists the DataFrame with a specified storage level.
+    - `unpersist()`: Removes the DataFrame from memory.
+    - `isEmpty()`: Checks if the DataFrame is empty.
+
 
 ##### Example:
 ```python
@@ -242,19 +243,18 @@ spark.stop()
 Spark SQL allows querying structured data using SQL syntax.
 
 
-
 ##### Key Operations on SQL:
 - **Actions:**
-    - `sql(query)`
-    - `table(tableName)`
-    - `createOrReplaceTempView(viewName)`
-    - `createGlobalTempView(viewName)`
+    - `sql(query)`: Executes an SQL query.
+    - `table(tableName)`: Retrieves a table as a DataFrame.
+    - `createOrReplaceTempView(viewName)`: Registers a DataFrame as a temporary view.
+    - `createGlobalTempView(viewName)`: Registers a DataFrame as a global temporary view.
 
 - **Transformations:**
     - Primarily used for querying with SQL syntax (e.g., SELECT, JOIN, GROUP BY).
 
 - **Others:**
-    - Integration with Hive (`enableHiveSupport()`, `setConf(key, value)`).
+    - Hive Integration: Enables querying Hive tables with `enableHiveSupport()` and configuring using `setConf(key, value)`.
 
 
 ##### Example:
@@ -340,21 +340,22 @@ Spark’s machine learning library provides tools for:
 
 ##### Key Operations on MLlib:
 - **Actions:**
-    - `fit(dataset)`
-    - `transform(dataset)`
-    - `save(path)`
-    - `load(path)`
-    - `evaluate(dataset)`
+    - `fit(dataset)`: Trains a model.
+    - `transform(dataset)`: Applies the model to a dataset.
+    - `save(path)`: Saves the model to the specified path.
+    - `load(path)`: Loads a model from the specified path.
+    - `evaluate(dataset)`: Evaluates the model on a dataset.
 
 - **Transformations:**
-    - `setParams(**params)`
-    - `setFeaturesCol(value)`
-    - `setLabelCol(value)`
-    - `setPredictionCol(value)`
-    - `setMaxIter(value)`
-    - `setRegParam(value)`
-    - `setThreshold(value)`
-    - `setStepSize(value)`
+    - `setParams(**params)`: Configures model parameters.
+    - `setFeaturesCol(value)`: Sets the feature column.
+    - `setLabelCol(value)`: Sets the label column.
+    - `setPredictionCol(value)`: Sets the prediction column.
+    - `setMaxIter(value)`: Sets the maximum number of iterations.
+    - `setRegParam(value)`: Sets the regularization parameter.
+    - `setThreshold(value)`: Sets the threshold for binary classification.
+    - `setStepSize(value)`: Sets the step size for gradient descent.
+
 
 ##### Example:
 ```python
@@ -442,27 +443,28 @@ Spark Streaming is used for processing real-time data streams.
 
 ##### Key Operations on Streaming:
 - **Actions:**
-    - `start()`
-    - `awaitTermination()`
-    - `stop()`
-    - `isActive()`
+    - `start()`: Starts the streaming computation.
+    - `awaitTermination()`: Waits for the streaming computation to terminate.
+    - `stop()`: Stops the streaming computation.
+    - `isActive()`: Checks if the streaming context is active.
 
 - **Transformations:**
-    - `map(func)`
-    - `flatMap(func)`
-    - `filter(func)`
-    - `reduceByKeyAndWindow(func, windowDuration, slideDuration)`
-    - `updateStateByKey(func)`
-    - `window(windowDuration, slideDuration)`
-    - `join(otherStream)`
-    - `union(otherStream)`
-    - `transform(func)`
-	- `countByWindow(windowDuration, slideDuration)`
-	- `countByValueAndWindow(windowDuration, slideDuration)`
+    - `map(func)`: Applies a function to each record.
+    - `flatMap(func)`: Maps each record to multiple outputs.
+    - `filter(func)`: Filters records based on a condition.
+    - `reduceByKeyAndWindow(func, windowDuration, slideDuration)`: Reduces data over a sliding window.
+    - `updateStateByKey(func)`: Updates the state for each key based on new data.
+    - `window(windowDuration, slideDuration)`: Aggregates data over a sliding window.
+    - `join(otherStream)`: Joins two streams.
+    - `union(otherStream)`: Merges two streams.
+    - `transform(func)`: Applies a custom transformation to the stream.
+    - `countByWindow(windowDuration, slideDuration)`: Counts elements over a sliding window.
+    - `countByValueAndWindow(windowDuration, slideDuration)`: Counts distinct values over a sliding window.
 
 - **Others:**
-    - `checkpoint(directory)`
-    - `remember(duration)`
+    - `checkpoint(directory)`: Sets the checkpoint directory.
+    - `remember(duration)`: Remembers RDDs for the specified duration.
+
 
 ##### Example:
 ```python
